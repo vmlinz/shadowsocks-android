@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
 
     dependencies {
@@ -25,21 +25,25 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 21
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "com.android.test.runner.MultiDexTestRunner"
     }
 
-    buildTypes {
-        debug {
-            minifyEnabled true
-            proguardFile file("proguard-rules.txt")
+    dexOptions {
+        preDexLibraries false
+        javaMaxHeapSize "2g"
+    }
+
+    productFlavors {
+        dev {
+            minSdkVersion 21
         }
 
-        release {
-            minifyEnabled true
-            proguardFile file("proguard-rules.text")
+        prod {
+            minSdkVersion 14
         }
     }
 
@@ -59,9 +63,11 @@ android {
 dependencies {
     compile "org.scala-lang:scala-library:2.10.5"
 
+    compile "com.android.support:multidex:1.0.1"
+    androidTestCompile "com.android.support:multidex-instrumentation:1.0.1", { exclude module: "multidex" }
+    compile "com.android.support:support-v4:22.1.1"
     compile "com.google.android.gms:play-services-base:7.3.0"
     compile "com.google.android.gms:play-services-ads:7.3.0"
-    compile "com.android.support:support-v4:22.1.1"
     compile "com.google.zxing:android-integration:3.1.0"
     compile "dnsjava:dnsjava:2.1.5"
     compile "com.github.kevinsawicki:http-request:5.6"
@@ -73,6 +79,7 @@ dependencies {
     compile "com.nostra13.universalimageloader:universal-image-loader:1.8.4"
     compile "com.j256.ormlite:ormlite-core:4.47"
     compile "com.j256.ormlite:ormlite-android:4.47"
+    compile 'eu.chainfire:libsuperuser:1.0.0.+'
 }
 
 tasks.withType(ScalaCompile) {
