@@ -43,6 +43,8 @@ import java.util
 import java.util.concurrent.TimeUnit
 
 import android.app.Application
+import android.content.Context
+import android.support.multidex.MultiDex
 import com.github.shadowsocks.database.DBHelper
 import com.github.shadowsocks.utils.Utils
 import com.google.android.gms.analytics.GoogleAnalytics
@@ -78,4 +80,10 @@ class ShadowsocksApplication extends Application {
     }
     pending.setResultCallback(callback, 2, TimeUnit.SECONDS)
   }
+
+  override protected def attachBaseContext(base: Context) {
+    super.attachBaseContext(base)
+    MultiDex.install(this)
+  }
+
 }
