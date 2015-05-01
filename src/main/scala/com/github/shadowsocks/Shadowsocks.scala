@@ -495,10 +495,16 @@ class Shadowsocks
     menuAdapter.setListener(this)
     listView.setAdapter(menuAdapter)
     drawer.setMenuView(listView)
-    // The drawable that replaces the up indicator in the action bar
-    drawer.setSlideDrawable(R.drawable.ic_drawer)
-    // Whether the previous drawable should be shown
-    drawer.setDrawerIndicatorEnabled(true)
+
+    if (Utils.isLollipopOrAbove) {
+      drawer.setDrawerIndicatorEnabled(false)
+    } else {
+      // The drawable that replaces the up indicator in the action bar
+      drawer.setSlideDrawable(R.drawable.ic_drawer)
+      // Whether the previous drawable should be shown
+      drawer.setDrawerIndicatorEnabled(true)
+    }
+
     if (!isSinglePane) {
       drawer.openMenu(false)
     }
@@ -514,7 +520,14 @@ class Shadowsocks
     getActionBar.setCustomView(switchLayout)
     getActionBar.setDisplayShowTitleEnabled(false)
     getActionBar.setDisplayShowCustomEnabled(true)
-    getActionBar.setIcon(R.drawable.ic_stat_shadowsocks)
+    if (Utils.isLollipopOrAbove) {
+      getWindow.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+      getWindow.setStatusBarColor(getResources().getColor(R.color.grey3));
+      getActionBar.setDisplayHomeAsUpEnabled(true)
+      getActionBar.setHomeAsUpIndicator(R.drawable.ic_drawer)
+    } else {
+      getActionBar.setIcon(R.drawable.ic_stat_shadowsocks)
+    }
     title.setOnLongClickListener(new OnLongClickListener {
       override def onLongClick(v: View): Boolean = {
         if (Utils.isLollipopOrAbove && bgService != null
@@ -909,13 +922,13 @@ class Shadowsocks
 
   private def showQrCode() {
     val image = new ImageView(this)
+    image.setPadding(0, dp2px(20), 0, dp2px(20))
     image.setLayoutParams(new LinearLayout.LayoutParams(-1, -1))
     val qrcode = QRCode.from(Parser.generate(currentProfile))
       .withSize(dp2px(250), dp2px(250)).asInstanceOf[QRCode]
     image.setImageBitmap(qrcode.bitmap())
 
     new AlertDialog.Builder(this)
-      .setTitle(getString(R.string.qrcode))
       .setCancelable(true)
       .setNegativeButton(getString(R.string.close), new DialogInterface.OnClickListener() {
       override def onClick(dialog: DialogInterface, id: Int) {
