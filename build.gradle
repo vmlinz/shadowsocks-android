@@ -21,6 +21,7 @@ apply plugin: "com.android.library"
 apply plugin: "jp.leafytree.android-scala"
 
 android {
+    resourcePrefix 'shadowsocks_'
     compileSdkVersion "android-22"
     buildToolsVersion "22.0.1"
 
