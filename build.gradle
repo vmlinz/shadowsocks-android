@@ -28,8 +28,6 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode "104"
-        versionName "2.6.6"
         testInstrumentationRunner "com.andrd.test.runner.MultiDexTestRunner"
     }
 
