@@ -26,7 +26,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 10
         targetSdkVersion 22
         testInstrumentationRunner "com.andrd.test.runner.MultiDexTestRunner"
     }
