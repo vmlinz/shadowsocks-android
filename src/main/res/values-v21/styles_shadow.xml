@@ -49,11 +49,11 @@
     </style>
 
     <style name="m_textAppearanceSmallPopupMenu" parent="@android:style/TextAppearance.Material.Widget.PopupMenu.Small">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
     <style name="m_textAppearanceLargePopupMenu" parent="@android:style/TextAppearance.Material.Widget.PopupMenu.Large">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
     <style name="DropDownListView.Shadow" parent="@android:style/Widget.Material.ListView.DropDown">
@@ -77,6 +77,20 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textAppearanceLargePopupMenu">@style/m_textAppearanceLargePopupMenu</item>
         <item name="android:textAppearanceSmallPopupMenu" >@style/m_textAppearanceSmallPopupMenu</item>
+    </style>
+
+    <style name="PopupTheme" parent="@android:style/Theme.Material.Light">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateAlwaysHidden</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
 </resources>
