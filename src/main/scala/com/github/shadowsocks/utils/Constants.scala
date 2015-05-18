@@ -56,7 +56,7 @@ object Msg {
 }
 
 object Path {
-  val BASE = "/data/data/com.github.shadowsocks/"
+  val BASE = "/data/data/com.televpn.app.telesocks/"
 }
 
 object Key {
