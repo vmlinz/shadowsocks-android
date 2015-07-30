@@ -30,5 +30,7 @@ src/main/assets/armeabi-v7a
 src/main/assets/x86
 src/main/assets/api-16/
 jni/Application.mk
+
+#gradle
 build/
 .gradle/
