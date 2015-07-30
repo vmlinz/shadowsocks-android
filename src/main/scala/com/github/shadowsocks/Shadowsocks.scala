@@ -474,20 +474,20 @@ class Shadowsocks
 
     addPreferencesFromResource(R.xml.pref_all)
 
-    // Initialize the profile
-    currentProfile = {
-      profileManager.getProfile(settings.getInt(Key.profileId, -1)) getOrElse currentProfile
-    }
-
     // Update the profile
     if (!status.getBoolean(getVersionName, false)) {
       val h = showProgress(getString(R.string.initializing))
       status.edit.putBoolean(getVersionName, true).apply()
+      currentProfile = profileManager.create()
       spawn {
-        reset()
-        currentProfile = profileManager.create()
+        install()
         h.sendEmptyMessage(0)
       }
+    }
+
+    // Initialize the profile
+    currentProfile = {
+      profileManager.getProfile(settings.getInt(Key.profileId, -1)) getOrElse currentProfile
     }
 
     // Initialize drawer
@@ -916,10 +916,7 @@ class Shadowsocks
     Console.runRootCommand(ab.toArray)
   }
 
-  def reset() {
-
-    crashRecovery()
-
+  def install() {
     copyAssets(System.getABI)
 
     val ab = new ArrayBuffer[String]
@@ -927,15 +924,25 @@ class Shadowsocks
       ab.append("chmod 755 " + Path.BASE + executable)
     }
     Console.runCommand(ab.toArray)
+  }
 
+  def reset() {
+
+    crashRecovery()
+
+    install()
   }
 
   private def recovery() {
     val h = showProgress(getString(R.string.recovering))
-    serviceStop()
     spawn {
       reset()
-      h.sendEmptyMessage(0)
+      handler.post(new Runnable {
+        override def run() {
+          serviceStop
+          h.sendEmptyMessage(0)
+        }
+      })
     }
   }
 
